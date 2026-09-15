@@ -16,34 +16,34 @@ const projects = [
     icon: <BookOpen className="text-purple-400" size={24} />
   },
   {
-    title: 'Naval Ship Detection in Enemy Waters',
+    title: 'HARMONY: HR Automation System',
     type: 'Project',
-    description: 'Engineered a real-time YOLOv8 object detection system using CSP-Darknet to classify 47 classes of military vessels, achieving 0.863 precision and 0.855 mAP@0.5.',
-    tags: ['Python', 'YOLOv8', 'PyTorch', 'Federated Learning'],
+    description: 'Engineered an integrated HR platform leveraging intelligent automation, Agentic AI, and Tesseract OCR to streamline multi-step recruitment workflows and interview scheduling.',
+    tags: ['Python', 'Agentic AI', 'OCR', 'Workflow Automation'],
     links: {
-      github: 'https://github.com/AUMANSH',
+      github: 'https://github.com/AUMANSH/MAJOR-PROJECT-1',
       external: null
     },
     icon: <ExternalLink className="text-cyan-400" size={24} />
   },
   {
     title: 'Intruder Detection System',
-    type: 'Project',
+    type: 'Code in Place 2026 Project',
     description: 'Proposed a hybrid pipeline utilizing YOLOv8n, ResNet18-backed CNN, and LBPH for behavior classification, outperforming standard CNNs in challenging lighting scenarios.',
     tags: ['Python', 'YOLOv8', 'CNN', 'Computer Vision'],
     links: {
-      github: 'https://github.com/AUMANSH',
+      github: 'https://github.com/AUMANSH/CODE-IN-PLACE-2026',
       external: null
     },
     icon: <ExternalLink className="text-cyan-400" size={24} />
   },
   {
-    title: 'HARMONY: HR Automation System',
+    title: 'Software Fault Tolerance',
     type: 'Project',
-    description: 'Engineered an integrated HR platform leveraging intelligent automation, Agentic AI, and Tesseract OCR to streamline multi-step recruitment workflows and interview scheduling.',
-    tags: ['Python', 'Agentic AI', 'OCR', 'Workflow Automation'],
+    description: 'Applied deep learning models to predict and mitigate software faults, drastically improving system robustness and overall reliability from historical defect data.',
+    tags: ['Python', 'Pandas', 'Scikit-learn', 'ML/DL'],
     links: {
-      github: 'https://github.com/AUMANSH',
+      github: 'https://github.com/AUMANSH/SOFTWARE-BUG-PREDICTION',
       external: null
     },
     icon: <ExternalLink className="text-cyan-400" size={24} />
