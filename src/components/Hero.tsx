@@ -69,11 +69,22 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Visual Element */}
-          <div className="flex-1 hidden lg:flex justify-center relative w-full max-w-md">
+          <div className="flex-1 hidden lg:flex flex-col items-center justify-center relative w-full max-w-md mt-10">
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-blue-500/20 blur-3xl rounded-full" />
-            <div className="relative glass-panel p-8 rounded-2xl w-full border-t border-l border-white/10 shadow-2xl overflow-hidden group">
+            
+            {/* Profile Image */}
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative w-56 h-56 rounded-full p-1.5 border border-cyan-500/50 shadow-[0_0_40px_rgba(0,210,255,0.3)] z-20 mb-[-60px] bg-slate-900"
+            >
+               <img src="/profile.jpg" alt="Aumansh Gupta" className="w-full h-full object-cover rounded-full" />
+            </motion.div>
+
+            <div className="relative glass-panel p-8 rounded-2xl w-full border-t border-l border-white/10 shadow-2xl overflow-hidden group z-10 pt-20">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"></div>
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
