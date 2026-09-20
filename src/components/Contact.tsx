@@ -1,105 +1,176 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Terminal } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [terminalState, setTerminalState] = useState<'idle' | 'typing' | 'done'>('idle');
+  const [values, setValues] = useState({
+    firstName: '',
+    email: '',
+    type: 'hireMe',
+    comment: ''
+  });
 
-  const handleTerminalClick = () => {
-    if (terminalState !== 'idle') return;
-    setTerminalState('typing');
+  const [touched, setTouched] = useState({
+    firstName: false,
+    email: false,
+    comment: false
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState<{type: 'success' | 'error', title: string, message: string} | null>(null);
+
+  // Validation Logic
+  const getErrors = () => {
+    const errors: any = {};
+    if (!values.firstName) {
+      errors.firstName = 'Required';
+    }
+    
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
+    }
+
+    if (!values.comment) {
+      errors.comment = 'Required';
+    } else if (values.comment.length < 25) {
+      errors.comment = 'Must be at least 25 characters';
+    }
+    return errors;
+  };
+
+  const errors = getErrors();
+
+  const handleBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setTouched({ firstName: true, email: true, comment: true });
+    
+    if (Object.keys(errors).length > 0) return;
+
+    setIsLoading(true);
+    setAlert(null);
+
+    // Mock API Call
     setTimeout(() => {
-      setTerminalState('done');
-      setTimeout(() => {
-        window.location.href = "mailto:aumanshgupta2004@gmail.com";
-        setTerminalState('idle');
-      }, 1500);
-    }, 1000);
+      setIsLoading(false);
+      const isSuccess = Math.random() > 0.5;
+
+      if (isSuccess) {
+        setAlert({
+          type: 'success',
+          title: 'All good!',
+          message: `Thanks for your submission ${values.firstName}, we will get back to you shortly!`
+        });
+        // Reset form
+        setValues({ firstName: '', email: '', type: 'hireMe', comment: '' });
+        setTouched({ firstName: false, email: false, comment: false });
+      } else {
+        setAlert({
+          type: 'error',
+          title: 'Oops',
+          message: 'Something went wrong, please try again later'
+        });
+      }
+    }, 1500);
   };
 
   return (
-    <footer id="contact" className="py-20 px-6 relative z-10 bg-slate-950 border-t border-slate-800">
-      <div className="container mx-auto max-w-4xl flex flex-col items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">Let's Connect</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-            Currently seeking junior roles in AI, Machine Learning, and Data Science. My inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-          </p>
-        </motion.div>
-
-        {/* Terminal Simulation */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="w-full max-w-2xl bg-black rounded-lg border border-slate-700 shadow-2xl overflow-hidden cursor-pointer group"
-          onClick={handleTerminalClick}
-        >
-          {/* Terminal Header */}
-          <div className="bg-slate-900 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="ml-2 text-xs font-mono text-slate-500">bash — aumansh@portfolio:~</span>
+    <section id="contact" className="py-20 px-6 bg-[#512DA8] min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-xl bg-white p-8 rounded-xl shadow-xl">
+        <h2 className="text-3xl font-bold mb-6 text-black">Contact me</h2>
+        
+        {alert && (
+          <div className={`p-4 mb-6 rounded-lg ${alert.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            <h4 className="font-bold">{alert.title}</h4>
+            <p>{alert.message}</p>
           </div>
-          
-          {/* Terminal Body */}
-          <div className="p-6 font-mono text-sm sm:text-base min-h-[160px] flex flex-col justify-center relative">
-            <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-            
-            <p className="text-slate-300">
-              <span className="text-green-400 font-bold">aumansh@portfolio</span>
-              <span className="text-white">:</span>
-              <span className="text-blue-400 font-bold">~</span>
-              <span className="text-white">$ </span>
-              {terminalState === 'idle' && (
-                <span className="text-slate-400 group-hover:text-cyan-400 transition-colors">./initiate_contact.sh <span className="animate-pulse bg-slate-300 text-transparent">_</span></span>
-              )}
-              {terminalState === 'typing' && (
-                <span className="text-cyan-400">./initiate_contact.sh</span>
-              )}
-              {terminalState === 'done' && (
-                <span className="text-cyan-400">./initiate_contact.sh</span>
-              )}
-            </p>
-            
-            {terminalState === 'done' && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mt-4 text-cyan-300"
-              >
-                <p>&gt; Establishing secure connection...</p>
-                <p>&gt; Resolving mailto:aumanshgupta2004@gmail.com...</p>
-                <p className="text-green-400 mt-2 flex items-center gap-2"><Mail size={16} /> Opening default mail client...</p>
-              </motion.div>
-            )}
-            
-            {terminalState === 'idle' && (
-              <div className="mt-6 flex items-center justify-center gap-2 text-slate-500 group-hover:text-cyan-500/50 transition-colors">
-                <Terminal size={16} />
-                <span className="text-xs uppercase tracking-widest">Click to run</span>
-              </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="firstName" className="text-sm font-semibold text-black">Name</label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              value={values.firstName}
+              onChange={handleChange}
+              onBlur={() => handleBlur('firstName')}
+              className={`border p-2 rounded text-black ${touched.firstName && errors.firstName ? 'border-red-500 focus:outline-red-500 outline-red-500' : 'border-gray-300'}`}
+            />
+            {touched.firstName && errors.firstName && (
+              <span className="text-red-500 text-sm">{errors.firstName}</span>
             )}
           </div>
-        </motion.div>
 
-        <div className="mt-20 text-slate-500 text-sm font-mono text-center">
-          <p>Designed & Built for Aumansh Vijayendra Gupta</p>
-          <div className="flex justify-center gap-4 mt-4">
-            <a href="https://github.com/AUMANSH" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">GitHub</a>
-            <a href="https://www.linkedin.com/in/aumansh-vijayendra-gupta-5aa951269/" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">LinkedIn</a>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="email" className="text-sm font-semibold text-black">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={() => handleBlur('email')}
+              className={`border p-2 rounded text-black ${touched.email && errors.email ? 'border-red-500 focus:outline-red-500 outline-red-500' : 'border-gray-300'}`}
+            />
+            {touched.email && errors.email && (
+              <span className="text-red-500 text-sm">{errors.email}</span>
+            )}
           </div>
-        </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="type" className="text-sm font-semibold text-black">Type of enquiry</label>
+            <select
+              id="type"
+              name="type"
+              value={values.type}
+              onChange={handleChange}
+              className="border border-gray-300 p-2 rounded text-black"
+            >
+              <option value="freelance">Freelance project proposal</option>
+              <option value="hireMe">Open source work</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="comment" className="text-sm font-semibold text-black">Your message</label>
+            <textarea
+              id="comment"
+              name="comment"
+              rows={5}
+              value={values.comment}
+              onChange={handleChange}
+              onBlur={() => handleBlur('comment')}
+              className={`border p-2 rounded text-black ${touched.comment && errors.comment ? 'border-red-500 focus:outline-red-500 outline-red-500' : 'border-gray-300'}`}
+            />
+            {touched.comment && errors.comment && (
+              <span className="text-red-500 text-sm">{errors.comment}</span>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-[#512DA8] hover:bg-purple-800 text-white font-bold py-3 px-4 rounded transition-colors flex justify-center items-center h-12 mt-4"
+          >
+            {isLoading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              'Submit'
+            )}
+          </button>
+        </form>
       </div>
-    </footer>
+    </section>
   );
 };
 

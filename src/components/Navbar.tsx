@@ -1,80 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaTwitter, FaMedium, FaStackOverflow } from 'react-icons/fa';
+
+const socials = [
+  { icon: <FaGithub size={24} />, url: "https://github.com/AUMANSH", key: "github" },
+  { icon: <FaLinkedin size={24} />, url: "https://www.linkedin.com/in/aumansh-vijayendra-gupta-5aa951269/", key: "linkedin" },
+  { icon: <FaTwitter size={24} />, url: "https://twitter.com", key: "twitter" },
+  { icon: <FaMedium size={24} />, url: "https://medium.com", key: "medium" },
+  { icon: <FaStackOverflow size={24} />, url: "https://stackoverflow.com", key: "stackoverflow" },
+];
 
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollPos = window.scrollY;
+      setVisible((prevScrollPos > currentScrollPos) || currentScrollPos < 10);
+      setPrevScrollPos(currentScrollPos);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [prevScrollPos]);
 
-  const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-slate-950/80 backdrop-blur-md py-4 shadow-lg border-b border-slate-800' : 'bg-transparent py-6'
+      className={`fixed top-0 w-full z-50 bg-[#18181b] transition-transform duration-300 ease-in-out ${
+        visible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-white tracking-tighter">
-          A<span className="text-cyan-400">.</span>G
-        </a>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-8">
-          {navLinks.map((link) => (
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Left Side: 5 Social Links */}
+        <nav className="flex gap-4">
+          {socials.map((social) => (
             <a
-              key={link.name}
-              href={link.href}
-              className="text-slate-300 hover:text-cyan-400 font-medium transition-colors"
+              key={social.key}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-300 transition-colors"
             >
-              {link.name}
+              {social.icon}
             </a>
           ))}
         </nav>
 
-        {/* Mobile Nav Toggle */}
-        <button
-          className="md:hidden text-slate-300 hover:text-white"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Right Side: 2 Internal Links */}
+        <nav className="flex gap-8">
+          <a
+            href="#projects"
+            onClick={(e) => handleClick(e, 'projects')}
+            className="text-white hover:text-gray-300 font-medium transition-colors"
+          >
+            Projects
+          </a>
+          <a
+            href="#contact"
+            onClick={(e) => handleClick(e, 'contact')}
+            className="text-white hover:text-gray-300 font-medium transition-colors"
+          >
+            Contact Me
+          </a>
+        </nav>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 w-full bg-slate-950/95 backdrop-blur-lg border-t border-b border-slate-800 shadow-xl"
-        >
-          <div className="flex flex-col px-6 py-4 gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-slate-300 hover:text-cyan-400 font-medium text-lg"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </motion.div>
-      )}
     </header>
   );
 };

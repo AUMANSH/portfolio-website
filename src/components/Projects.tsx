@@ -1,117 +1,57 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, BookOpen } from 'lucide-react';
-import { FaGithub } from 'react-icons/fa';
+import { ArrowRight } from 'lucide-react';
 
 const projects = [
   {
-    title: 'FLIP: Hybrid BFV-CKKS Framework',
-    type: 'Publication (Taylor & Francis)',
-    description: 'Developed a scalable federated learning framework using homomorphic encryption, achieving 99.23% accuracy on MNIST under adversarial data poisoning and model inversion attacks.',
-    tags: ['Python', 'TensorFlow', 'Homomorphic Encryption', 'Federated Learning'],
-    links: {
-      github: null,
-      external: 'https://www.taylorfrancis.com/chapters/edit/10.1201/9781003739791-90/flip-hybrid-bfv-ckks-encryption-framework-scalable-secure-federated-learning-aumansh-vijayendra-gupta-deepak-kumar-verma-vipin-kr-kushwahac-shiva-gupta-nitin-mohan'
-    },
-    icon: <BookOpen className="text-purple-400" size={24} />
+    title: 'React Space',
+    description: 'Handy toolbelt to create amazing AR components in a React app, with redux integration via middleware.',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
   },
   {
-    title: 'HARMONY: HR Automation System',
-    type: 'Project',
-    description: 'Engineered an integrated HR platform leveraging intelligent automation, Agentic AI, and Tesseract OCR to streamline multi-step recruitment workflows and interview scheduling.',
-    tags: ['Python', 'Agentic AI', 'OCR', 'Workflow Automation'],
-    links: {
-      github: 'https://github.com/AUMANSH/MAJOR-PROJECT-1',
-      external: null
-    },
-    icon: <ExternalLink className="text-cyan-400" size={24} />
+    title: 'React Infinite Scroll',
+    description: 'A scrollable bottom sheet with virtualization support, native animations at 60 FPS and fully implemented in JS land.',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
   },
   {
-    title: 'Intruder Detection System',
-    type: 'Code in Place 2026 Project',
-    description: 'Proposed a hybrid pipeline utilizing YOLOv8n, ResNet18-backed CNN, and LBPH for behavior classification, outperforming standard CNNs in challenging lighting scenarios.',
-    tags: ['Python', 'YOLOv8', 'CNN', 'Computer Vision'],
-    links: {
-      github: 'https://github.com/AUMANSH/CODE-IN-PLACE-2026',
-      external: null
-    },
-    icon: <ExternalLink className="text-cyan-400" size={24} />
+    title: 'Photo Gallery',
+    description: 'A One-stop shop for photographers to share and monetize their photos, allowing them to have a second source of income.',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
   },
   {
-    title: 'Software Fault Tolerance',
-    type: 'Project',
-    description: 'Applied deep learning models to predict and mitigate software faults, drastically improving system robustness and overall reliability from historical defect data.',
-    tags: ['Python', 'Pandas', 'Scikit-learn', 'ML/DL'],
-    links: {
-      github: 'https://github.com/AUMANSH/SOFTWARE-BUG-PREDICTION',
-      external: null
-    },
-    icon: <ExternalLink className="text-cyan-400" size={24} />
+    title: 'Event planner',
+    description: 'A mobile application for leisure seekers to discover unique events and activities in their city with a few taps.',
+    image: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
   }
 ];
 
 const Projects: React.FC = () => {
   return (
-    <section id="projects" className="py-20 px-6 relative z-10">
-      <div className="container mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">Featured Engineering</h2>
-          <div className="w-20 h-1 bg-cyan-500 mb-8"></div>
-        </motion.div>
-
+    <section id="projects" className="py-20 px-6 bg-[#14532d] min-h-screen flex items-center">
+      <div className="container mx-auto max-w-5xl">
+        <h2 className="text-4xl font-bold mb-12 text-white">Featured Projects</h2>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass-panel rounded-2xl p-8 flex flex-col h-full group hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden"
+            <div 
+              key={index} 
+              className="bg-white rounded-xl overflow-hidden shadow-lg"
             >
-              {/* Subtle gradient background on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-transparent to-purple-500/0 group-hover:from-cyan-500/5 group-hover:to-purple-500/10 transition-colors duration-500"></div>
-              
-              <div className="flex justify-between items-start mb-6 relative z-10">
-                <div className="p-3 bg-slate-900 rounded-lg shadow-inner">
-                  {project.icon}
-                </div>
-                <div className="flex gap-4">
-                  {project.links.github && (
-                    <a href={project.links.github} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
-                      <FaGithub size={20} />
-                    </a>
-                  )}
-                  {project.links.external && (
-                    <a href={project.links.external} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
-                      <ExternalLink size={20} />
-                    </a>
-                  )}
-                </div>
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6 flex flex-col gap-4">
+                <h3 className="text-xl font-bold text-black">{project.title}</h3>
+                <p className="text-gray-600 text-sm">{project.description}</p>
+                <a 
+                  href="#" 
+                  className="flex items-center gap-2 text-black font-semibold text-sm hover:underline mt-2"
+                >
+                  See more <ArrowRight size={16} />
+                </a>
               </div>
-              
-              <div className="relative z-10 flex-grow">
-                <div className="text-xs font-mono text-cyan-400 mb-2 tracking-wider uppercase">{project.type}</div>
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">{project.title}</h3>
-                <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="relative z-10 flex flex-wrap gap-2 mt-auto pt-6 border-t border-slate-700/50">
-                {project.tags.map(tag => (
-                  <span key={tag} className="text-xs font-mono text-slate-400 bg-slate-900/50 px-2 py-1 rounded">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
