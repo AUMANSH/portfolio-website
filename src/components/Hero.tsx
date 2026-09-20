@@ -16,11 +16,11 @@ const Hero: React.FC = () => {
         </div>
         
         <h1 className="text-2xl md:text-3xl font-semibold text-white mb-8">
-          Hello, I am Pete!
+          Hello, I am Aumansh Vijayendra Gupta!
         </h1>
         
         <p className="text-4xl md:text-5xl font-bold text-white max-w-2xl leading-tight">
-          A frontend developer specialised in React
+          An AI ML Engineer & Data Scientist
         </p>
       </div>
     </section>

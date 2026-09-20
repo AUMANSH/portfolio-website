@@ -3,24 +3,28 @@ import { ArrowRight } from 'lucide-react';
 
 const projects = [
   {
-    title: 'React Space',
-    description: 'Handy toolbelt to create amazing AR components in a React app, with redux integration via middleware.',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    title: 'Intruder Detection System',
+    description: 'Proposed a hybrid pipeline utilizing YOLOv8n, ResNet18-backed CNN, and LBPH for behavior classification.',
+    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    link: 'https://github.com/AUMANSH/CODE-IN-PLACE-2026'
   },
   {
-    title: 'React Infinite Scroll',
-    description: 'A scrollable bottom sheet with virtualization support, native animations at 60 FPS and fully implemented in JS land.',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    title: 'HARMONY: HR Automation',
+    description: 'Engineered an integrated HR platform leveraging intelligent automation, Agentic AI, and Tesseract OCR.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    link: 'https://github.com/AUMANSH/MAJOR-PROJECT-1'
   },
   {
-    title: 'Photo Gallery',
-    description: 'A One-stop shop for photographers to share and monetize their photos, allowing them to have a second source of income.',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    title: 'FLIP: Hybrid Framework',
+    description: 'Developed a scalable federated learning framework using homomorphic encryption (BFV-CKKS).',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    link: 'https://www.taylorfrancis.com/chapters/edit/10.1201/9781003739791-90/flip-hybrid-bfv-ckks-encryption-framework-scalable-secure-federated-learning-aumansh-vijayendra-gupta-deepak-kumar-verma-vipin-kr-kushwahac-shiva-gupta-nitin-mohan'
   },
   {
-    title: 'Event planner',
-    description: 'A mobile application for leisure seekers to discover unique events and activities in their city with a few taps.',
-    image: 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    title: 'Software Fault Tolerance',
+    description: 'Applied deep learning models to predict and mitigate software faults to improve system robustness.',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    link: 'https://github.com/AUMANSH/SOFTWARE-BUG-PREDICTION'
   }
 ];
 
@@ -45,7 +49,9 @@ const Projects: React.FC = () => {
                 <h3 className="text-xl font-bold text-black">{project.title}</h3>
                 <p className="text-gray-600 text-sm">{project.description}</p>
                 <a 
-                  href="#" 
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-center gap-2 text-black font-semibold text-sm hover:underline mt-2"
                 >
                   See more <ArrowRight size={16} />
